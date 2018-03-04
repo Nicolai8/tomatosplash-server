@@ -1,0 +1,21 @@
+{
+  "mongoose": {
+	"uri": "mongodb://username:password@host:port/dbname",
+	"options": {
+	},
+	"socketOptions": {
+	  "keepAlive": 1
+	}
+  },
+  "session": {
+	"secret": "1sa23e1f",
+	"key": "connect.sid",
+	"cookie": {
+	  "path": "/",
+	  "httpOnly": true,
+	  "maxAge": null
+	}
+  },
+  "admin": "username",
+  "adminPassword": "password"
+}
