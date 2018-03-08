@@ -44,7 +44,6 @@ app.use(passport.session());
 require("./routes")(app);
 
 app.use(function (err, req, res, next) {
-	console.dir(arguments);
 	res.status(err.status || 500);
 	if (res.req.headers["x-requested-with"] === "XMLHttpRequest") {
 		err = {
@@ -54,7 +53,7 @@ app.use(function (err, req, res, next) {
 		};
 		res.json(err);
 	} else {
-		res.redirect("/");
+		res.send(err.message);
 	}
 });
 

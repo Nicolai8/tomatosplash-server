@@ -1,6 +1,6 @@
 {
   "mongoose": {
-	"uri": "mongodb://username:password@host:port/dbname",
+	"uri": "mongodb://nicolai:n1c0la1@ds255958.mlab.com:55958/sagradb",
 	"options": {
 	},
 	"socketOptions": {
