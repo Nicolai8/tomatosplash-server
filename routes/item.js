@@ -5,9 +5,9 @@ const itemService = require("../services/itemService");
 const checkAuth = require("../middleware/checkAuth");
 
 router.get("/", function (req, res, next) {
-    itemService.get()
-        .then((items) => {
-            res.json(items);
+    itemService.get(+req.query.page, +req.query.limit)
+        .then((result) => {
+            res.json(result);
         })
         .catch(next);
 });

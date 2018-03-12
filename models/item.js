@@ -1,13 +1,14 @@
 "use strict";
 const mongoose = require("../lib/mongoose");
-const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate');
 
-const schema = new Schema({
+const schema = new mongoose.Schema({
     name: { type: String, require: true },
     description: String,
     price: Number,
     type: String,
     created: { type: Date, default: Date.now }
 });
+schema.plugin(mongoosePaginate);
 
 exports.Item = mongoose.model("Item", schema);
