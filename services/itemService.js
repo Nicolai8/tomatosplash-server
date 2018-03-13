@@ -22,7 +22,7 @@ module.exports = {
         return item.save();
     },
     update: function (id, propertiesToUpdate) {
-        return Item.findByIdAndUpdate(id, propertiesToUpdate);
+        return Item.findByIdAndUpdate(id, propertiesToUpdate).then(() => Item.findById(id));
     },
     "delete": function (id) {
         return Item.findByIdAndRemove(id);

@@ -40,10 +40,10 @@ router.put("/:id", checkAuth, function (req, res, next) {
         type: req.body.type,
         price: req.body.price
     })
-        .then((item) => {
-            res.json(item);
-        })
-        .catch(next);
+    .then((item) => {
+        res.json(item);
+    })
+    .catch(next);
 });
 
 module.exports = router;
