@@ -13,7 +13,7 @@ router.get("/", function (req, res, next) {
 });
 
 //save
-router.post("/", checkAuth, function (req, res, next) {
+router.put("/", checkAuth, function (req, res, next) {
     if (!req.body.name) return next(new HttpError(400));
 
     itemService.create(req.body)
@@ -33,7 +33,7 @@ router.delete("/:id", checkAuth, function (req, res, next) {
 });
 
 //edit
-router.put("/:id", checkAuth, function (req, res, next) {
+router.post("/:id", checkAuth, function (req, res, next) {
     itemService.update(req.params.id, {
         name: req.body.name,
         description: req.body.description,

@@ -11,4 +11,4 @@ const schema = new mongoose.Schema({
 });
 schema.plugin(mongoosePaginate);
 
-exports.Item = mongoose.model("Item", schema);
+exports.model = mongoose.model("Item", schema);

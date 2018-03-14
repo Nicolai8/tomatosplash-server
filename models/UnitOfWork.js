@@ -1,4 +1,5 @@
-"use strict";
+'use strict';
 module.exports = {
-	Item: require("./item").Item
+    Item: require('./item').model,
+	Order: require('./order').model,
 };
