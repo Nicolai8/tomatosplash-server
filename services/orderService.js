@@ -1,6 +1,6 @@
 'use strict';
 const Order = require('../models/UnitOfWork').Order;
-const orderStatusEnum = require('./enums/orderStatus').enum;
+const orderStatusEnum = require('../models/enums/orderStatus').enum;
 
 module.exports = {
     'get': function (page, limit) {
