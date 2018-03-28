@@ -5,7 +5,7 @@ const itemService = require("../services/itemService");
 const checkAuth = require("../middleware/checkAuth");
 
 router.get("/", function (req, res, next) {
-    itemService.get(+req.query.page, +req.query.limit)
+    itemService.get()
         .then((result) => {
             res.json(result);
         })

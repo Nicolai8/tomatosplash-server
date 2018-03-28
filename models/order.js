@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
     // - to prevent loosing data after removing some items
     processedOrderItems: [String],
     created: { type: Date, default: Date.now },
+    processed: { type: Date, default: Date.now },
     _items: [{ type: Schema.ObjectId, ref: 'Item' }],
 });
 schema.plugin(mongoosePaginate);

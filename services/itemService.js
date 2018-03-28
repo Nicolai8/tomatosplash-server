@@ -2,15 +2,8 @@
 const Item = require("../models/UnitOfWork").Item;
 
 module.exports = {
-    "get": function (page, limit) {
-        return Item.paginate(
-            {},
-            {
-                sort: { created: -1 },
-                page: page,
-                limit: limit,
-            }
-        );
+    "get": function () {
+        return Item.find().sort({ created: -1 });
     },
     create: function (newItemProperties) {
         let item = new Item({
