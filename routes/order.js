@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
 
 //save
 router.put('/', checkAuth, function (req, res, next) {
-    if (!req.body.name) return next(new HttpError(400));
+    if (!req.body.items || req.body.items.length === 0) return next(new HttpError(400));
 
     orderService.create(req.body)
         .then((item) => {
@@ -42,14 +42,15 @@ router.post('/proceed/:id', checkAuth, function (req, res, next) {
 
 //edit
 router.post('/:id', checkAuth, function (req, res, next) {
+
     orderService.update(req.params.id, {
         type: req.body.type,
         _items: req.body._items
     })
-    .then((item) => {
-        res.json(item);
-    })
-    .catch(next);
+        .then((item) => {
+            res.json(item);
+        })
+        .catch(next);
 });
 
 module.exports = router;

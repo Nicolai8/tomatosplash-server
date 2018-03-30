@@ -17,20 +17,22 @@ module.exports = {
         let order = new Order({
             type: newItemProperties.type,
             processedOrderItems: [],
-            _items: newItemProperties._items,
+            items: newItemProperties.items,
         });
         return order.save();
     },
     update: function (id, propertiesToUpdate) {
+        propertiesToUpdate.updated = Date.now();
         return Order.findByIdAndUpdate(id, propertiesToUpdate).then(() => Order.findById(id));
     },
     proceedOrder: function (id) {
-        return Order.findById(id).populate({ path: '_items', select: '-_id' })
+        return Order.findById(id).populate({ path: 'items', select: '-_id' })
             .then((order) => {
-                order.processedOrderItems = order._items.map((item) => {
+                order.processedOrderItems = order.items.map((item) => {
                     return JSON.stringify(item);
                 });
                 order.type = orderStatusEnum.PROCESSED;
+                order.processed = Date.now();
                 order._items = [];
                 return order.save();
             })
