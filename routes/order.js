@@ -40,12 +40,20 @@ router.post('/proceed/:id', checkAuth, function (req, res, next) {
         .catch(next);
 });
 
+router.post('/daily-report', checkAuth, function (req, res, next) {
+    orderService.getDailyReport(req.body.date)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch(next);
+});
+
 //edit
 router.post('/:id', checkAuth, function (req, res, next) {
 
     orderService.update(req.params.id, {
         type: req.body.type,
-        _items: req.body._items
+        items: req.body.items
     })
         .then((item) => {
             res.json(item);

@@ -1,6 +1,7 @@
 'use strict';
 const Order = require('../models/UnitOfWork').Order;
 const orderStatusEnum = require('../models/enums/orderStatus').enum;
+const moment = require('moment');
 
 module.exports = {
     'get': function (page, limit) {
@@ -26,16 +27,25 @@ module.exports = {
         return Order.findByIdAndUpdate(id, propertiesToUpdate).then(() => Order.findById(id));
     },
     proceedOrder: function (id) {
-        return Order.findById(id).populate({ path: 'items', select: '-_id' })
+        return Order.findById(id).populate({ path: 'items._item', select: '-__v -created' })
             .then((order) => {
                 order.processedOrderItems = order.items.map((item) => {
                     return JSON.stringify(item);
                 });
                 order.type = orderStatusEnum.PROCESSED;
                 order.processed = Date.now();
-                order._items = [];
+                order.items = [];
                 return order.save();
             })
+    },
+    getDailyReport: function (date) {
+        date = moment(date).startOf('day');
+        return Order.find({
+            processed: {
+                $gte: date.toDate(),
+                $lt: moment(date).add(1, 'days').toDate(),
+            },
+        });
     },
     'delete': function (id) {
         return Order.findByIdAndRemove(id);
