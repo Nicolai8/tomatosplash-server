@@ -7,13 +7,13 @@ const bodyParser = require('body-parser');
 const session = require("express-session");
 const sessionStore = require("./lib/sessionStore");
 const config = require('./config');
-const cors = require('express-cors');
+const cors = require('cors');
 const app = express();
 
 app.use(cors({
-	allowedOrigins: [
-		'*'
-	]
+    origin: 'http://localhost:4200',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
 }));
 
 // view engine setup
@@ -24,14 +24,14 @@ app.set('view engine', 'jade');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-	resave: true,
-	saveUninitialized: true,
-	secret: config.get("session:secret"),
-	cookie: config.get("session:cookie"),
-	store: sessionStore
+    resave: true,
+    saveUninitialized: true,
+    secret: config.get("session:secret"),
+    cookie: config.get("session:cookie"),
+    store: sessionStore
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,17 +44,17 @@ app.use(passport.session());
 require("./routes")(app);
 
 app.use(function (err, req, res, next) {
-	res.status(err.status || 500);
-	if (res.req.headers["x-requested-with"] === "XMLHttpRequest") {
-		err = {
-			status: err.status,
-			message: err.message,
-			stack: err.stack || ""
-		};
-		res.json(err);
-	} else {
-		res.send(err.message);
-	}
+    res.status(err.status || 500);
+    if (res.req.headers["x-requested-with"] === "XMLHttpRequest") {
+        err = {
+            status: err.status,
+            message: err.message,
+            stack: err.stack || ""
+        };
+        res.json(err);
+    } else {
+        res.send(err.message);
+    }
 });
 
 
